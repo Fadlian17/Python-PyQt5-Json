@@ -40,10 +40,10 @@ class MyApp(QMainWindow):
         self.table = QTableWidget()
         self.table.setRowCount(len(self.users))
         self.table.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        self.table.setColumnCount(7)
+        self.table.setColumnCount(6)
 
         for row in range(len(self.users)):
-            for col in range(7):
+            for col in range(6):
                 if col == 0:
                     self.table.setItem(
                         row, col, QTableWidgetItem(str(self.users[row]["id"])))
@@ -58,16 +58,13 @@ class MyApp(QMainWindow):
                         row, col, QTableWidgetItem(self.users[row]["email"]))
                 elif col == 4:
                     self.table.setItem(
-                        row, col, QTableWidgetItem(self.users[row]["address"]["street"]))
-                elif col == 5:
-                    self.table.setItem(
-                        row, col, QTableWidgetItem(self.users[row]["address"]["city"]))
+                        row, col, QTableWidgetItem("{},{}".format(self.users[row]["address"]["street"], self.users[row]["address"]["city"])))
                 else:
                     self.table.setItem(row, col, QTableWidgetItem(
                         self.users[row]["phone"]))
 
         self.table.setHorizontalHeaderLabels(
-            ["id", "name", "username", "email", "street", "city", "phone"])
+            ["id", "name", "username", "email", "adrress", "phone"])
 
     def setWidget(self):
         self.layout = QVBoxLayout()
