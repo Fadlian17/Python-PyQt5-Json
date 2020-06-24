@@ -55,7 +55,7 @@ class MyApp(QMainWindow):
                         row, col, QTableWidgetItem(self.users[row]["username"]))
                 elif col == 2:
                     self.table.setItem(
-                        row, col, QTableWidgetItem(self.users[row]["username"]))
+                        row, col, QTableWidgetItem(self.users[row]["name"]))
                 elif col == 3:
                     self.table.setItem(
                         row, col, QTableWidgetItem(self.users[row]["email"]))
@@ -67,7 +67,7 @@ class MyApp(QMainWindow):
                         self.users[row]["phone"]))
 
         self.table.setHorizontalHeaderLabels(
-            ["id", "name", "username", "email", "adrress", "phone"])
+            ["id", "username", "name", "email", "adrress", "phone"])
 
     def setWidget(self):
         self.layout = QVBoxLayout()
