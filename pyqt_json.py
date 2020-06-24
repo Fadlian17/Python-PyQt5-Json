@@ -1,5 +1,5 @@
 # test123
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QApplication, QLabel, QLineEdit, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QMessageBox
+from PyQt5.QtWidgets import QAbstractScrollArea, QTableWidget, QTableWidgetItem, QApplication, QLabel, QLineEdit, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QMessageBox
 import requests
 
 
@@ -39,35 +39,35 @@ class MyApp(QMainWindow):
     def createTable(self):
         self.table = QTableWidget()
         self.table.setRowCount(len(self.users))
-        self.table.setColumnCount(5)
-
-        # self.table.setItem(0,0,QTableWidgetItem("name"))
-        # self.table.setItem(0,1,QTableWidgetItem("name"))
-        # self.table.setItem(1,0,QTableWidgetItem("name"))
-        # self.table.setItem(1,1,QTableWidgetItem("name"))
-        # self.table.setItem(2,0,QTableWidgetItem("name"))
-        # self.table.setItem(2,1,QTableWidgetItem("name"))
+        self.table.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.table.setColumnCount(7)
 
         for row in range(len(self.users)):
-            for col in range(5):
+            for col in range(7):
                 if col == 0:
                     self.table.setItem(
-                        row, col, QTableWidgetItem(self.users[row]["name"]))
+                        row, col, QTableWidgetItem(str(self.users[row]["id"])))
                 elif col == 1:
                     self.table.setItem(
                         row, col, QTableWidgetItem(self.users[row]["username"]))
                 elif col == 2:
                     self.table.setItem(
-                        row, col, QTableWidgetItem(self.users[row]["email"]))
+                        row, col, QTableWidgetItem(self.users[row]["username"]))
                 elif col == 3:
                     self.table.setItem(
+                        row, col, QTableWidgetItem(self.users[row]["email"]))
+                elif col == 4:
+                    self.table.setItem(
                         row, col, QTableWidgetItem(self.users[row]["address"]["street"]))
+                elif col == 5:
+                    self.table.setItem(
+                        row, col, QTableWidgetItem(self.users[row]["address"]["city"]))
                 else:
                     self.table.setItem(row, col, QTableWidgetItem(
-                        self.users[row]["address"]["city"]))
+                        self.users[row]["phone"]))
 
         self.table.setHorizontalHeaderLabels(
-            ["name", "username", "email", "address", "address"])
+            ["id", "name", "username", "email", "street", "city", "phone"])
 
     def setWidget(self):
         self.layout = QVBoxLayout()
@@ -81,12 +81,10 @@ class MyApp(QMainWindow):
 
     def showName(self):
         name = self.lineEdit.text()
-        username = self.lineEdit.text()
         self.resultInput.setText(name)
-        self.resultInput.setText(username)
         # self.message.accepted()
-        QMessageBox.information(self, "Result", f"{name}{username} found!")
-        print(name, username)
+        QMessageBox.information(self, "Result", f"{name} data found!")
+        print(name)
 
 
 if __name__ == "__main__":
