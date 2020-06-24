@@ -1,6 +1,9 @@
 # test123
 from PyQt5.QtWidgets import QAbstractScrollArea, QTableWidget, QTableWidgetItem, QApplication, QLabel, QLineEdit, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QMessageBox
 import requests
+import aiohttp
+import asyncio
+from PyQt5 import QtCore
 
 
 class Fetch():
@@ -77,11 +80,18 @@ class MyApp(QMainWindow):
         self.widget.setLayout(self.layout)
 
     def showName(self):
-        name = self.lineEdit.text()
-        self.resultInput.setText(name)
-        # self.message.accepted()
-        QMessageBox.information(self, "Result", f"{name} data found!")
-        print(name)
+        dataTables = self.table.findItems(
+            self.lineEdit.text().title(), QtCore.Qt.MatchExactly)
+
+        if dataTables:
+            results = '\n'.join('Congratulations Data ! %s found in row %d coloumn %d' % (
+                item.text(), item.row() + 1, item.column() + 1)for item in dataTables)
+            # all_data = list(map(lambda x: datas in x, self.data))
+            # print(all_data)
+        else:
+            results = 'Found Nothing'
+
+        QMessageBox.information(self, 'Search Results', results)
 
 
 if __name__ == "__main__":
