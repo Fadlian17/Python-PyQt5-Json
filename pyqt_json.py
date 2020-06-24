@@ -80,18 +80,38 @@ class MyApp(QMainWindow):
         self.widget.setLayout(self.layout)
 
     def showName(self):
-        dataTables = self.table.findItems(
-            self.lineEdit.text().title(), QtCore.Qt.MatchExactly)
+        # dataTables = self.table.findItems(
+        #     self.lineEdit.text().title(), QtCore.Qt.MatchExactly)
 
+        # if dataTables:
+        #     results = '\n'.join('Congratulations Data ! %s found in row %d coloumn %d' % (
+        #         item.text(), item.row() + 1, item.column() + 1)for item in dataTables)
+        #     # all_data = list(map(lambda x: datas in x, self.data))
+        #     # print(all_data)
+        # else:
+        #     results = 'Found Nothing'
+
+        # QMessageBox.information(self, 'Search Results', results)
+        name = self.lineEdit.text()
+        # self.resultInput.setText(name)
+        # self.message.accepted()
+        dataTables = self.table.findItems(name, QtCore.Qt.MatchExactly)
+        res = self.table.currentRow()
         if dataTables:
-            results = '\n'.join('Congratulations Data ! %s found in row %d coloumn %d' % (
-                item.text(), item.row() + 1, item.column() + 1)for item in dataTables)
-            # all_data = list(map(lambda x: datas in x, self.data))
-            # print(all_data)
+            results = '\n'.join(
+                '%d,%d' % (item.row(), item.column())
+                for item in dataTables)
+            rep = results.split(",")
+            row, col = rep
+            array = []
+            for x in range(5):
+                res = self.table.item(int(row), int(x)).text()
+                array.append(res)
+            QMessageBox.information(self, "Congratulations Data Result!", "id: {}, name : {}, username : {}, email : {}, address : {}".format(
+                array[0], array[1], array[2], array[3], array[4]))
         else:
-            results = 'Found Nothing'
-
-        QMessageBox.information(self, 'Search Results', results)
+            QMessageBox.warning(self, 'Search Results',
+                                f"Sorry {name} Not Found!")
 
 
 if __name__ == "__main__":
